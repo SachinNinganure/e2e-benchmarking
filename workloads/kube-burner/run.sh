@@ -4,6 +4,11 @@
 . build_helper.sh
 . ../../utils/compare.sh
 
+#if edge_machineset_exist then;  scale machineset ; for node in edge_nodes do ; label node done; export POD_NODE_SELECTOR fi; 
+edgeNode = `oc get nodes -l node-role.kubernetes.io/worker,node-role.kubernetes.io/workload!="",node-role.kubernetes.io/infra!=""|grep edge|awk {'print$1'}`
+echo $edgeNode
+oc label node $edgeNode node-role.kubernetes.io/edge=
+
 label=""
 case ${WORKLOAD} in
   cluster-density)
