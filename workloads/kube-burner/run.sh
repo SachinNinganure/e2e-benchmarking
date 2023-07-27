@@ -7,7 +7,7 @@
 #if edge_machineset_exist then;  scale machineset ; for node in edge_nodes do ; label node done; export POD_NODE_SELECTOR fi; 
 edgenode=`oc get nodes -l node-role.kubernetes.io/worker,node-role.kubernetes.io/workload!="",node-role.kubernetes.io/infra!=""|grep edge|awk {'print$1'}`
 echo $edgenode
-oc label node $edgenode node-role.kubernetes.io/edge=
+#oc label node $edgenode node-role.kubernetes.io/edge=
 
 label=""
 case ${WORKLOAD} in
