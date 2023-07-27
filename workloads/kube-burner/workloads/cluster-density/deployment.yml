@@ -103,4 +103,3 @@ spec:
       - key: "node.kubernetes.io/edge"
         operator: "Exists"
         effect: "NoSchedule"
-        tolerationSeconds: 900
