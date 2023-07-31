@@ -5,6 +5,10 @@ metadata:
   name: {{.JobName}}-{{.Replica}}
 spec:
   nodeSelector: {{.nodeSelector}}
+  tolerations:
+  - key: "node-role.kubernetes.io/edge"
+    operator: "Exists"
+    effect: "NoSchedule" 
   serviceAccount: builder
   source:
     dockerfile: |-
