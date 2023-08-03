@@ -100,6 +100,6 @@ spec:
         operator: "Exists"
         effect: "NoExecute"
         tolerationSeconds: 900
-      - key: "node.kubernetes.io/edge"
+      - key: "node-role.kubernetes.io/edge"
         operator: "Exists"
         effect: "NoSchedule"
