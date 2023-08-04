@@ -2,10 +2,11 @@
 kind: Build
 apiVersion: build.openshift.io/v1
 metadata:
-  name: test
+  name: {{.JobName}}-{{.Replica}}
 spec:
   buildOverrides:
-    nodeSelector: {{.nodeSelector}}
+    nodeSelector:
+       node-role.kubernetes.io/edge:
     tolerations:
     - key: "node-role.kubernetes.io/edge"
       operator: "Exists"
