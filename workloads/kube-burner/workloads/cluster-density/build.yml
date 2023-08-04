@@ -8,9 +8,9 @@ spec:
     nodeSelector:
        node-role.kubernetes.io/edge:
     tolerations:
-    - key: "node-role.kubernetes.io/edge"
-      operator: "Exists"
-      effect: "NoSchedule" 
+    - key: node-role.kubernetes.io/edge
+      operator: Exists
+      effect: NoSchedule 
   serviceAccount: builder
   source:
     dockerfile: |-
