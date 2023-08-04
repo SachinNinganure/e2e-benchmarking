@@ -2,14 +2,13 @@
 kind: Build
 apiVersion: build.openshift.io/v1
 metadata:
-  name: test
+  name: {{.JobName}}-{{.Replica}}
 spec:
-  buildOverrides:
-    nodeSelector: {{.nodeSelector}}
-    tolerations:
-    - key: "node-role.kubernetes.io/edge"
-      operator: "Exists"
-      effect: "NoSchedule" 
+  nodeSelector: {{.nodeSelector}}
+  tolerations:
+  - key: "node-role.kubernetes.io/edge"
+    operator: "Exists"
+    effect: "NoSchedule" 
   serviceAccount: builder
   source:
     dockerfile: |-
