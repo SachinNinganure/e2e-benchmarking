@@ -15,7 +15,7 @@ UUID=$(uuidgen)
 KUBE_DIR=${KUBE_DIR:-/tmp}
 
 download_binary(){
-  KUBE_BURNER_URL=https://github.com/cloud-bulldozer/kube-burner/releases/download/v${KUBE_BURNER_VERSION}/kube-burner-V${KUBE_BURNER_VERSION}-linux-x86_64.tar.gz
+  KUBE_BURNER_URL=https://github.com/sachinninganure/kube-burner/releases/download/v${KUBE_BURNER_VERSION}/kube-burner-V${KUBE_BURNER_VERSION}-linux-x86_64.tar.gz
   curl -sS -L ${KUBE_BURNER_URL} | tar -xzC ${KUBE_DIR}/ kube-burner
 }
 
