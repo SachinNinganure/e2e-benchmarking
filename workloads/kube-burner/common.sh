@@ -191,7 +191,7 @@ prep_networkpolicy_workload() {
   oc apply -f workloads/networkpolicy/clusterrole.yml
   oc apply -f workloads/networkpolicy/clusterrolebinding.yml
 
-etcd_perf() {
+etcd-perf() {
   #CASE 01 create 100 projects in the batches of 500
   #for i in {1..100}; do oc new-project project-$i;oc create configmap project-$i --from-file=/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt; done
   for i in {1..100}; do oc new-project project-$i;oc create configmap project-$i --from-file=/etc/pki/ca-trust/source/anchors;done

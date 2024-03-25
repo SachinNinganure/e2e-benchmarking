@@ -121,7 +121,8 @@ case ${WORKLOAD} in
     prep_networkpolicy_workload
   ;;
   etcd-perf)
-    etcd_perf	  
+    METRICS_PROFILE=${METRICS_PROFILE:-metrics-profiles/metrics-ovn.yaml}
+    etcd-perf	  
   ;;  
   custom)
   ;;
