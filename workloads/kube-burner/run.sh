@@ -122,6 +122,7 @@ case ${WORKLOAD} in
   ;;
   etcd-perf)
     etcd_perf	  
+  ;;  
   custom)
   ;;
   *)
