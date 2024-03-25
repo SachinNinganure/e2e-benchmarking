@@ -220,5 +220,4 @@ etcd_perf() {
   PRIVATE_KEY=$(cat tls.key | base64 | tr -d '\n')
   oc create -f workloads/etcd-perf/testsec.yaml
   rm -f sshkey sshkey.pub tls.crt tls.key
-
 }
