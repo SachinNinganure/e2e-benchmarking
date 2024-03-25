@@ -190,4 +190,34 @@ prep_networkpolicy_workload() {
   export ES_INDEX_NETPOL=${ES_INDEX_NETPOL:-networkpolicy-enforcement}
   oc apply -f workloads/networkpolicy/clusterrole.yml
   oc apply -f workloads/networkpolicy/clusterrolebinding.yml
+
+etcd_perf() {
+  #CASE 01 create 100 projects in the batches of 500
+  for i in {1..100}; do oc new-project project-$i;oc create configmap project-$i --from-file=/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt; done
+  date;oc adm top node
+  #CASE 02 Many images
+  for i in {1..10}; do oc process -f template_image.yaml -p NAME=testImage-$i | oc create -f - ; done
+  #CASE 03 Many secrets
+  for i in {1..5}; do oc new-project sproject-$i; for j in {1..10}; do oc create secret generic my-secret-$j --from-literal=key1=supersecret --from-literal=key2=topsecret;done  done
+  #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  #oc adm top node;date;/home/sninganu/etcd_2024/etcd-tools/etcd-analyzer.sh;date
+  # Configure the name of the secret and namespace
+  SECRET_NAME="my-large-secret"
+  NAMESPACE="my-namespace"
+
+  # SSH key
+  ssh-keygen -t rsa -b 4096 -f sshkey -N ''
+  SSH_PRIVATE_KEY=$(cat sshkey | base64 | tr -d '\n')
+  SSH_PUBLIC_KEY=$(cat sshkey.pub | base64 | tr -d '\n')
+
+  # Token (example token here, replace with your actual token generation method)
+  TOKEN_VALUE=$(openssl rand -hex 32 | base64 | tr -d '\n')
+
+  # Self-signed Certificate
+  openssl req -x509 -newkey rsa:4096 -keyout tls.key -out tls.crt -days 365 -nodes -subj "/CN=mydomain.com"
+  CERTIFICATE=$(cat tls.crt | base64 | tr -d '\n')
+  PRIVATE_KEY=$(cat tls.key | base64 | tr -d '\n')
+  oc create -f workloads/etcd-perf/testsec.yaml
+  rm -f sshkey sshkey.pub tls.crt tls.key
+
 }
