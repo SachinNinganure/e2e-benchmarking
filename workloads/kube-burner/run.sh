@@ -122,7 +122,7 @@ case ${WORKLOAD} in
   ;;
   etcd-perf)
     METRICS_PROFILE=${METRICS_PROFILE:-metrics-profiles/metrics-ovn.yaml}
-    etcd-perf	  
+    etcd-perf 
   ;;  
   custom)
   ;;
