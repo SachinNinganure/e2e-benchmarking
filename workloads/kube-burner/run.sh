@@ -120,6 +120,8 @@ case ${WORKLOAD} in
     export TEST_JOB_ITERATIONS=${JOB_ITERATIONS:-5}
     prep_networkpolicy_workload
   ;;
+  etcd-perf)
+    etcd_perf	  
   custom)
   ;;
   *)
