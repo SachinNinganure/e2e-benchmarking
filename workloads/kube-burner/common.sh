@@ -197,7 +197,7 @@ etcd-perf() {
   for i in {1..100}; do oc new-project project-$i;oc create configmap project-$i --from-file=/etc/pki/ca-trust/source/anchors;done
   date;oc adm top node
   #CASE 02 Many images
-  for i in {1..10}; do oc process -f template_image.yaml -p NAME=testImage-$i | oc create -f - ; done
+  for i in {1..10}; do oc process -f workloads/etcd-perf/template_image.yaml -p NAME=testImage-$i | oc create -f - ; done
   #CASE 03 Many secrets
   for i in {1..5}; do oc new-project sproject-$i; for j in {1..10}; do oc create secret generic my-secret-$j --from-literal=key1=supersecret --from-literal=key2=topsecret;done  done
   #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
