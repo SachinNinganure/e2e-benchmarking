@@ -220,4 +220,6 @@ etcd-perf() {
   PRIVATE_KEY=$(cat tls.key | base64 | tr -d '\n')
   oc create -f workloads/etcd-perf/testsec.yaml
   rm -f sshkey sshkey.pub tls.crt tls.key
+  cd workloads/etcd-perf;git clone https://github.com/peterducai/etcd-tools.git;sleep 10;
+  date;oc adm top node;date;workload/etcd-perf/etcd-tools/etcd-analyzer.sh;date
 }
