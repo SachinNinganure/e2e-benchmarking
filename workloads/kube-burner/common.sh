@@ -190,7 +190,7 @@ prep_networkpolicy_workload() {
   export ES_INDEX_NETPOL=${ES_INDEX_NETPOL:-networkpolicy-enforcement}
   oc apply -f workloads/networkpolicy/clusterrole.yml
   oc apply -f workloads/networkpolicy/clusterrolebinding.yml
-
+}
 etcd-perf() {
   #CASE 01 create 100 projects in the batches of 500
   #for i in {1..100}; do oc new-project project-$i;oc create configmap project-$i --from-file=/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt; done
