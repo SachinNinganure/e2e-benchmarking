@@ -194,13 +194,13 @@ prep_networkpolicy_workload() {
 etcd-perf() {
   #CASE 01 create 100 projects in the batches of 500
   #for i in {1..100}; do oc new-project project-$i;oc create configmap project-$i --from-file=/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt; done
-  for i in {1..100}; do oc new-project project-$i;oc create configmap project-$i --from-file=/etc/pki/ca-trust/source/anchors;done
+  for i in {1..100}; do oc new-project project-$i;oc -n project-$i create configmap project-$i --from-file=/etc/pki/ca-trust/source/anchors;done
   date;oc adm top node
   #CASE 02 Many images
-  ns01=`oc get ns|grep multi-image`
-  if [ $ns01 -ne 0 ];then
-  oc create ns multi-image
-  fi
+   if ! oc get ns |grep multi-image >/dev/null;
+    then
+      oc create ns multi-image;
+   fi
   for i in {1..10}; do oc process -f workloads/etcd-perf/template_image.yaml -p NAME=testImage-$i | oc create -n multi-image -f - ; done
   #CASE 03 Many secrets
 
