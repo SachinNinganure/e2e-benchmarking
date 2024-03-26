@@ -194,17 +194,17 @@ prep_networkpolicy_workload() {
 etcd-perf() {
   #CASE 01 create 100 projects in the batches of 500
   #for i in {1..100}; do oc new-project project-$i;oc create configmap project-$i --from-file=/etc/pki/ca-trust/extracted/openssl/ca-bundle.trust.crt; done
-  for i in {1..100}; do oc new-project project-$i;oc -n project-$i create configmap project-$i --from-file=/etc/pki/ca-trust/source/anchors;done
+  for i in {1..10}; do oc new-project project-$i;oc -n project-$i create configmap project-$i --from-file=/etc/pki/ca-trust/source/anchors;done
   date;oc adm top node
   #CASE 02 Many images
    if ! oc get ns |grep multi-image >/dev/null;
     then
       oc create ns multi-image;
    fi
-  for i in {1..10}; do oc process -f workloads/etcd-perf/template_image.yaml -p NAME=testImage-$i | oc create -n multi-image -f - ; done
+  for i in {1..10}; do oc process -f workloads/etcd-perf/template_image.yaml -p NAME=testImage-$i | oc -n multi-image create -f - ; done
   #CASE 03 Many secrets
 
-  for i in {1..5}; do oc new-project sproject-$i; for j in {1..10}; do oc -n sproject-$i create secret generic my-secret-$j --from-literal=key1=supersecret --from-literal=key2=topsecret;done  done
+  for i in {1..5}; do oc new-project sproject-$i; for j in {1..5}; do oc -n sproject-$i create secret generic my-secret-$j --from-literal=key1=supersecret --from-literal=key2=topsecret;done  done
   #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   # Configure the name of the secret and namespace
   SECRET_NAME="my-large-secret"
@@ -222,7 +222,7 @@ etcd-perf() {
   openssl req -x509 -newkey rsa:4096 -keyout tls.key -out tls.crt -days 365 -nodes -subj "/CN=mydomain.com"
   CERTIFICATE=$(cat tls.crt | base64 | tr -d '\n')
   PRIVATE_KEY=$(cat tls.key | base64 | tr -d '\n')
-  oc create -f workloads/etcd-perf/testsec.yaml
+  oc -n multi-image create -f workloads/etcd-perf/testsec.yaml
   rm -f sshkey sshkey.pub tls.crt tls.key
   cd workloads/etcd-perf;git clone https://github.com/peterducai/etcd-tools.git;sleep 10;
   date;oc adm top node;date;workload/etcd-perf/etcd-tools/etcd-analyzer.sh;date
