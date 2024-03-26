@@ -225,5 +225,11 @@ etcd-perf() {
   oc -n multi-image create -f workloads/etcd-perf/testsec.yaml
   rm -f sshkey sshkey.pub tls.crt tls.key
   cd workloads/etcd-perf;git clone https://github.com/peterducai/etcd-tools.git;sleep 10;
+  #To check the etcd pod load status
+  for i in ` oc -n openshift-etcd get pods | grep etcd-ip |awk '{print $1}'`; do oc -n openshift-etcd exec $i -- etcdctl endpoint health; done
   date;oc adm top node;date;etcd-tools/etcd-analyzer.sh;date
+  #Fio Test STARTS...........................................................................!
+  ./fio_suite.sh
+  etc_masternode1=`oc get node |grep master|awk '{print $1}'|tail -1`
+  oc debug -n openshift-etcd --quiet=true node/$etc_masternode1 -- chroot host bash -c "podman run --privileged --volume /var/lib/etcd:/test quay.io/peterducai/openshift-etcd-suite:latest fio"
 }
