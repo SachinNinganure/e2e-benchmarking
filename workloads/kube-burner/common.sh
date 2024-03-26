@@ -197,11 +197,15 @@ etcd-perf() {
   for i in {1..100}; do oc new-project project-$i;oc create configmap project-$i --from-file=/etc/pki/ca-trust/source/anchors;done
   date;oc adm top node
   #CASE 02 Many images
-  for i in {1..10}; do oc process -f workloads/etcd-perf/template_image.yaml -p NAME=testImage-$i | oc create -f - ; done
+  ns01=`oc get ns|grep multi-image`
+  if [ $ns01 -ne 0 ];then
+  oc create ns multi-image
+  fi
+  for i in {1..10}; do oc process -f workloads/etcd-perf/template_image.yaml -p NAME=testImage-$i | oc create -n multi-image -f - ; done
   #CASE 03 Many secrets
-  for i in {1..5}; do oc new-project sproject-$i; for j in {1..10}; do oc create secret generic my-secret-$j --from-literal=key1=supersecret --from-literal=key2=topsecret;done  done
+
+  for i in {1..5}; do oc new-project sproject-$i; for j in {1..10}; do oc -n sproject-$i create secret generic my-secret-$j --from-literal=key1=supersecret --from-literal=key2=topsecret;done  done
   #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  #oc adm top node;date;/home/sninganu/etcd_2024/etcd-tools/etcd-analyzer.sh;date
   # Configure the name of the secret and namespace
   SECRET_NAME="my-large-secret"
   NAMESPACE="my-namespace"
