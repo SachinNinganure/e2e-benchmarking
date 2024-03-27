@@ -9,7 +9,7 @@
     then
       oc create ns multi-image;
    fi
-  for i in {1..12000}; do oc -n multi-image process -f template_image.yaml -p NAME=testImage-$i | oc -n multi-image create -f - ; done
+  for i in {1..120000}; do oc -n multi-image process -f template_image.yaml -p NAME=testImage-$i | oc -n multi-image create -f - ; done
   echo "to check endpoint health after creating many images"
   for i in ` oc -n openshift-etcd get pods | grep etcd-ip |awk '{print $1}'`; do oc -n openshift-etcd exec $i -- etcdctl endpoint health; done
   #CASE 03 Many secrets; 300namespaces each with 400 secrets
