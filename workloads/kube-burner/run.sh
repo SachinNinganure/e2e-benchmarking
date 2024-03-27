@@ -122,7 +122,7 @@ case ${WORKLOAD} in
   ;;
   etcd-perf)
     METRICS_PROFILE=${METRICS_PROFILE:-metrics-profiles/metrics-ovn.yaml}
-    etcd-perf 
+    workloads/etcd-perf/runetcdperf.sh 
   ;;  
   custom)
   ;;
@@ -164,6 +164,8 @@ if [[ ${WORKLOAD} == "concurrent-builds" ]]; then
   done
   unlabel_nodes_with_label $label
   cat conc_builds_results.out
+ elif [[ ${WORKLOAD} == "etcd-perf" ]]; then
+  echo  "skip run_workload"	 
 else
   run_workload
 fi
