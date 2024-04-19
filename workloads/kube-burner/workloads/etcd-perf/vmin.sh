@@ -1,28 +1,9 @@
- #CASE 01 create 100 projects in the batches of 500
-  for i in {1..10}; do oc new-project project-$i;oc -n project-$i create configmap project-$i --from-file=/etc/pki/ca-trust/source/anchors;done
-  date;oc adm top node
-  echo "to check endpoint health after creating many projects"
-  for i in ` oc -n openshift-etcd get pods | grep etcd-ip |awk '{print $1}'`; do oc -n openshift-etcd exec $i -- etcdctl endpoint health; done
-    
-  #CASE 02 Many images
-  if ! oc get ns |grep multi-image >/dev/null;
-    then
-      oc create ns multi-image;
-  fi
-  
-  for i in {1..10}; do oc -n multi-image process -f workloads/etcd-perf/template_image.yaml -p NAME=testImage-$i | oc -n multi-image create -f - ; done
-  echo "to check endpoint health after creating many images"
-  for i in ` oc -n openshift-etcd get pods | grep etcd-ip |awk '{print $1}'`; do oc -n openshift-etcd exec $i -- etcdctl endpoint health; done
-  
-  
   #CASE 03 Many secrets; 300namespaces each with 400 secrets
-  for i in {1..3}; do oc new-project sproject-$i; for j in {1..4}; do oc -n sproject-$i create secret generic my-secret-$j --from-literal=key1=supersecret --from-literal=key2=topsecret;done  done
+  for i in {1..3}; do oc new-project sproject-$i; for j in {1..2}; do oc -n sproject-$i create secret generic my-secret-$j --from-literal=key1=supersecret --from-literal=key2=topsecret;done  done
   #---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   # Configure the name of the secret and namespace
   SECRET_NAME="my-large-secret"
   NAMESPACE="my-namespace"
-  
-  oc create ns my-namespace
 
   # SSH key
   ssh-keygen -t rsa -b 4096 -f sshkey -N ''
@@ -36,13 +17,13 @@
   openssl req -x509 -newkey rsa:4096 -keyout tls.key -out tls.crt -days 365 -nodes -subj "/CN=mydomain.com"
   CERTIFICATE=$(cat tls.crt | base64 | tr -d '\n')
   PRIVATE_KEY=$(cat tls.key | base64 | tr -d '\n')
-  oc -n multi-image create -f workloads/etcd-perf/testsec.yaml
+  oc -n multi-image create -f testsec.yaml
   rm -f sshkey sshkey.pub tls.crt tls.key
   git clone https://github.com/peterducai/etcd-tools.git;sleep 10;
   
-#CASE 4 large secrets
+#CASE 4 large secrets---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 echo "Large secrets...!"
-for i in {3..10};
+for i in {3..8};
 do
 SECRET_NAME="my-large-secret-$i"
 

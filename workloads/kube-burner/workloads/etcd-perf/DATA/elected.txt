@@ -1,2 +1,3 @@
-{"level":"info","ts":"2024-04-19T03:46:41.748868Z","logger":"raft","caller":"etcdserver/zap_raft.go:77","msg":"raft.node: df053dccc3d8f6a0 elected leader 982ee53495d7b502 at term 6"}
-{"level":"info","ts":"2024-04-19T03:47:32.182827Z","logger":"raft","caller":"etcdserver/zap_raft.go:77","msg":"raft.node: df053dccc3d8f6a0 elected leader 2379f292685dc630 at term 7"}
+{"level":"info","ts":"2024-04-19T05:53:48.673542Z","logger":"raft","caller":"etcdserver/zap_raft.go:77","msg":"raft.node: ea2add56c01b27fb elected leader ffbebc63f3b03545 at term 7"}
+{"level":"info","ts":"2024-04-19T05:54:41.954499Z","logger":"raft","caller":"etcdserver/zap_raft.go:77","msg":"raft.node: ea2add56c01b27fb elected leader 156141754b795637 at term 8"}
+{"level":"info","ts":"2024-04-19T05:56:30.2064Z","logger":"raft","caller":"etcdserver/zap_raft.go:77","msg":"raft.node: ea2add56c01b27fb elected leader ea2add56c01b27fb at term 9"}
