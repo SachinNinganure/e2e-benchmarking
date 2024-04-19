@@ -1,0 +1,2 @@
+{"level":"info","ts":"2024-04-19T03:46:41.748868Z","logger":"raft","caller":"etcdserver/zap_raft.go:77","msg":"raft.node: df053dccc3d8f6a0 elected leader 982ee53495d7b502 at term 6"}
+{"level":"info","ts":"2024-04-19T03:47:32.182827Z","logger":"raft","caller":"etcdserver/zap_raft.go:77","msg":"raft.node: df053dccc3d8f6a0 elected leader 2379f292685dc630 at term 7"}
