@@ -33,7 +33,7 @@ set +e
 JOB_START=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
 
 # Initialize the command var
-cmd="timeout ${TEST_TIMEOUT} ./k8s-netperf"
+cmd="timeout ${TEST_TIMEOUT} ./k8s-netperf --udnl2"
 
 # Function to add flags conditionally
 add_flag() {
