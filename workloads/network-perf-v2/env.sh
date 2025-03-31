@@ -17,7 +17,7 @@ export NETPERF_VERSION=${NETPERF_VERSION:-v0.2.01}
 export OS=${OS:-Linux}
 export PROMETHEUS_URL=
 export ARCH=$(uname -m)
-export NETPERF_URL=${NETPERF_URL:-https://github.com/SachinNinganure/releases/download/${NETPERF_VERSION}/k8s-netperf_${OS}_${NETPERF_VERSION}_${ARCH}.tar.gz}
+export NETPERF_URL=${NETPERF_URL:-https://github.com/SachinNinganure/k8s-netperf/releases/download/${NETPERF_VERSION}/k8s-netperf_${OS}_${NETPERF_VERSION}_${ARCH}.tar.gz}
 
 # External server
 export EXTERNAL_SERVER_ADDRESS=${EXTERNAL_SERVER_ADDRESS:-}
